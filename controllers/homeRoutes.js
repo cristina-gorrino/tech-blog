@@ -76,11 +76,17 @@ router.get('/dashboard', withAuth, async (req, res) => {
 router.get('/login', (req, res) => {
     // If the user is already logged in, redirect the request to homepage
     if (req.session.logged_in) {
-      res.redirect('/');
-      return;
+        res.redirect('/');
+        return;
     }
-  
+
     res.render('login');
-  });
+});
+
+// Route for users who need the sign-up form
+router.get('/signup', (req, res) => {
+
+    res.render('signup');
+});
 
 module.exports = router;
