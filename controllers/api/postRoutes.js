@@ -14,6 +14,20 @@ res.status(200).json(newPost);
     }
 });
 
+router.put('/:id', async (req, res) => {
+    // update a post by its `id` value
+    try {
+        const postData = await Post.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        });
+        res.status(200).json(postData);
+    } catch (err) {
+        res.status(400),json(err);
+    }
+});
+
 router.delete('/:id', withAuth, async (req, res) => {
     try {
         const postData = await Post.destroy({
