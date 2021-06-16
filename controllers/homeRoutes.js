@@ -28,6 +28,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET a specific Post by id
+// TODO add withAuth, not sure if model:Comment is needed here
 router.get('/post/:id', async (req, res) => {
     try {
         const postData = await Post.findByPk(req.params.id, {
@@ -36,6 +37,9 @@ router.get('/post/:id', async (req, res) => {
                 model: User,
                 attributes: ['username'],
             },
+            {
+                model: Comment
+            }
             ],
         });
 
@@ -50,5 +54,23 @@ router.get('/post/:id', async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+// Render the logged in user's dashboard
+router.get('/dashboard', withAuth, async (req, res) => {
+    try {
+        const postData = await Post.findAll({
+            where: {
+                user_id: req.session.user_id
+            }
+        });
+        const post = postData.get({ plain: true });
+        res.render('dashboard', {
+            ...post,
+            logged_in: req.session.logged_in
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 
 module.exports = router;
