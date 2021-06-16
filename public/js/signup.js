@@ -10,7 +10,6 @@ const signupFormHandler = async (event) => {
       body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },
     });
- console.log(response);
     if (response.ok) {
       // Redirect to home page after successful sign up
       document.location.replace('/');
