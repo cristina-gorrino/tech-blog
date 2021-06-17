@@ -23,7 +23,7 @@
 
 This application is a blogging platform that allows users to create an account, log in, and create blog posts or comment on blog posts. It is fully featured so that the user can do all operations through the website. Logged in users can manage their posts in their Dashboard.
 
-Deployed Link: 
+Deployed Link: https://tech-blog-cg.herokuapp.com/
 
 <a name="installation"></a>
 ## Installation
