@@ -46,6 +46,8 @@ router.get('/post/:id', withAuth, async (req, res) => {
 
         const post = postData.get({ plain: true });
         console.log(post);
+        console.log(req.session.user_id);
+        console.log(post.user_id);
         if (req.session.user_id = post.user_id){
             // if the post belongs to the user, then the user can update or delete it
             res.render('post-edit', {
