@@ -29,8 +29,9 @@ router.get('/', async (req, res) => {
 
 // GET a specific Post by id
 // TODO add withAuth, not sure if model:Comment is needed here
-router.get('/post/:id', async (req, res) => {
+router.get('/post/:id', withAuth, async (req, res) => {
     try {
+        
         const postData = await Post.findByPk(req.params.id, {
             include: [
             {
@@ -45,11 +46,22 @@ router.get('/post/:id', async (req, res) => {
 
         const post = postData.get({ plain: true });
         console.log(post);
+        if (req.session.user_id = post.user_id){
+            // if the post belongs to the user, then the user can update or delete it
+            res.render('post-edit', {
+                ...post,
+                logged_in: req.session.logged_in
+            });
 
-        res.render('post', {
-            ...post,
-            logged_in: req.session.logged_in
-        });
+        } else {
+            // if the post does not belong to logged in user, then the user can add a comment
+            res.render('post', {
+                ...post,
+                logged_in: req.session.logged_in
+            });
+        }
+
+
     } catch (err) {
         res.status(500).json(err);
     }
