@@ -3,9 +3,11 @@ const editPostHandler = async (event) => {
   
     const title = document.querySelector('#title').value.trim();
     const content = document.querySelector('#content').value.trim();
+    const urlArr = document.location.href.split("/");
+    const post_id = urlArr[urlArr.length-1];
   
     if (title && content) {
-      const response = await fetch('/api/posts', {
+      const response = await fetch(`/api/posts/${post_id}`, {
         method: 'PUT',
         body: JSON.stringify({ title, content }),
         headers: { 'Content-Type': 'application/json' },
@@ -20,7 +22,9 @@ const editPostHandler = async (event) => {
   };
 
 const deletePostHandler = async (event) => {
-    const response = await fetch('/api/posts', {
+  const urlArr = document.location.href.split("/");
+  const post_id = urlArr[urlArr.length-1];
+    const response = await fetch(`/api/posts/${post_id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
